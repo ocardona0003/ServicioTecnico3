@@ -1,0 +1,225 @@
+﻿@*Para controlar dropdownList con buscador*@
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+@model ServicioTecnico3.Models.mostrar_lavantadoDet_Result
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Id. Tarea</label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                @Html.EditorFor(model => model.id, new { @id = "id", htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">No. Levantado</label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                @Html.EditorFor(model => model.idLevantado, new { @id = "idLevantado", htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Descripcion Tarea</label>
+
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                @Html.TextAreaFor(m => m.descripcionTarea, new { @id = "descripcionTarea", @class = "form-control", @placeholder = "", @tabindex = "5" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Tipo de Tarea</label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <select id="idTipoTa" class="form-control dropdown-search" name="TipoTarea" style="width:280px; height: 400px;">
+                    <option value="AL">Sustitucion</option>
+                    <option value="WY">Correctivo</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Area de Trabajo</label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <select id="idArea" class="form-control dropdown-search" name="AreasLevantado" style="width:280px; height: 400px;">
+                    <option value="AL">Cocina</option>
+                    <option value="WY">Jardines</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Proceso de Tarea </label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <select id="idProceso" class="form-control dropdown-search" name="ProcesoTarea" style="width:280px; height: 400px;">
+                    <option value="AL">Mantenimiento</option>
+                    <option value="WY">Orden de Trabajo</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Estado de Tarea </label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                <select id="idEstado" class="form-control dropdown-search" name="EstadoTarea" style="width:280px; height: 400px;">
+                    <option value="AL">Abierto</option>
+                    <option value="WY">Finalizado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Materiales </label>
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <!-- Editable table -->
+                <div class="card">
+                    @*<h3 class="card-header text-center font-weight-bold text-uppercase py-4">Editable table</h3>*@
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2">
+                                <a href="#!" class="text-success">
+                                    <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+                                </a>
+                            </span>
+                            <table class="table table-bordered table-responsive-md table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Id</th>
+                                        <th class="text-center">Cant.</th>
+                                        <th class="text-center">Medida</th>
+                                        <th class="text-center">Material</th>
+                                        <th class="text-center">#Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="pt-3-half" contenteditable="true">1</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Unidad</td>
+                                        <td class="pt-3-half" contenteditable="true">Materiales de preuba de conocimiento</td>
+
+
+                                        <td>
+                                            <span class="table-remove">
+                                                <button type="button"
+                                                        class="btn btn-danger btn-rounded btn-sm my-0">
+                                                    Quitar
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- This is our clonable table line -->
+                                    <tr>
+                                        <td class="pt-3-half" contenteditable="true">2</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Unidad</td>
+                                        <td class="pt-3-half" contenteditable="true">Materiales de preuba de conocimiento</td>
+
+                                        <td>
+                                            <span class="table-remove">
+                                                <button type="button"
+                                                        class="btn btn-danger btn-rounded btn-sm my-0">
+                                                    Quitar
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- This is our clonable table line -->
+                                    <tr>
+                                        <td class="pt-3-half" contenteditable="true">3</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Unidad</td>
+                                        <td class="pt-3-half" contenteditable="true">Materiales de preuba de conocimiento</td>
+
+                                        <td>
+                                            <span class="table-remove">
+                                                <button type="button"
+                                                        class="btn btn-danger btn-rounded btn-sm my-0">
+                                                    Quitar
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- This is our clonable table line -->
+                                    <tr class="hide">
+                                        <td class="pt-3-half" contenteditable="true">4</td>
+                                        <td class="pt-3-half" contenteditable="true">30</td>
+                                        <td class="pt-3-half" contenteditable="true">Unidad</td>
+                                        <td class="pt-3-half" contenteditable="true">Materiales de preuba de conocimiento</td>
+
+                                        <td>
+                                            <span class="table-remove">
+                                                <button type="button"
+                                                        class="btn btn-danger btn-rounded btn-sm my-0">
+                                                    Quitar
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Editable table -->
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Observación</label>
+
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                @Html.TextAreaFor(m => m.comentario, new { @id = "comentario", @class = "form-control", @placeholder = "", @tabindex = "5" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-12 col-md-4 col-sm-4 col-lg-4">Usuario</label>
+            <div class="col-md-8 col-sm-8 col-lg-8">
+                @Html.TextAreaFor(m => m.id_usuario, new { @id = "id_usuario", @class = "form-control", @placeholder = "", @tabindex = "5" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("FileUpload", "Levantado", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload Image:</label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <input type="submit" value="Upload" class="submit" />
+}
+
+<img src="@Url.Action("Index", "Images", new { id = 1 })" />
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-search').select2();
+    });
+</script>

@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MaxPower</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @*para datatable*@
+    <link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            @*<div class="navbar-header">
+                    @Html.ActionLink("MP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>*@
+
+            <div class="mynav_navbar">
+                @Html.ActionLink("Inicio", "Index", "Home")
+
+            </div>
+
+            <div class="mynav_dropdown">
+                <button class="mynav_dropbtn">
+                    Operaciones
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="mynav_dropdown-content">
+                    @Html.ActionLink("Visita Técnica", "Index", "BoletaVisita")
+                    @Html.ActionLink("Levantados", "Index", "Levantados")
+
+                </div>
+            </div>
+
+
+
+            <div action="" class="navbar-form navbar-right">
+                @*<label style="color:white;  font-size: 14px;"> Hola,  @((Session["Login"] != null) ? Session["Login"].ToString() : "Inicie Sesion")!</label>&nbsp;&nbsp;*@
+
+                <label style="color:white;  font-size: 14px;">Bienvenido!</label>&nbsp;&nbsp;
+
+                <a href='@Url.Action("Usuario","Login")' class="btn btn-default btn-icon-split">                  
+                    <span class="text">Salir</span>
+                </a>
+            </div>
+        </div>
+
+    </nav>
+    <div class="container body-content">
+
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Herracentro S.A.</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<script>
+    $(document).ready(function () {
+        $('#btn-salir').click(function () {
+            document.location.href = '/Login/Index'
+        });
+    })
+
+</script>
+
+<!--Referencia para los datatables-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+    .mynav_navbar {
+        overflow: inherit;
+        background-color: #222222;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+
+
+        .mynav_navbar a {
+            float: left;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+
+
+
+    .mynav_dropdown {
+        float: left;
+        overflow: hidden;
+    }
+
+
+
+        .mynav_dropdown .mynav_dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+
+
+
+        .mynav_navbar a:hover, .mynav_dropdown:hover .mynav_dropbtn {
+            background-color: #C9302C;
+        }
+
+
+
+    .mynav_dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+
+
+        .mynav_dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+
+
+            .mynav_dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+
+
+    .mynav_dropdown:hover .mynav_dropdown-content {
+        display: block;
+    }
+</style>

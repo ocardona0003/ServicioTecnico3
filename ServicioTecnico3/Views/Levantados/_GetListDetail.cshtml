@@ -1,0 +1,90 @@
+﻿<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+@model IEnumerable<ServicioTecnico3.Models.mostrar_lavantadoDet_Result>
+
+<br />
+
+
+<table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th>
+                <label>Id</label>
+            </th>
+            <th>
+                <label>Descripcion</label>
+            </th>
+            <th>
+                <label>Tipo Tarea</label>
+            </th>
+            <th>
+                <label>Área</label>
+            </th>
+            <th>
+                <label>Proceso</label>
+            </th>
+            <th>
+                <label>Estado</label>
+            </th>
+            <th>
+                <label>Materiales</label>
+            </th>
+            <th>
+                <label>Total Imágenes</label>
+            </th>
+            <th>#Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.descripcionTarea)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoMant)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Proceso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.materiales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Img)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Editar linea">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Eliminar linea">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        @*@Html.ActionLink("Ver", "Details", new { id = item.id }, new { @class = "btn btn-warning btn-sm" })
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm"*@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>

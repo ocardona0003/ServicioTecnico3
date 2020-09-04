@@ -1,0 +1,135 @@
+﻿@model ServicioTecnico3.Models.mostrar_Boleta_Visita_Tecnica_Det_Result
+
+
+<form id="formCreateDetail"  action="">
+    <!-- Boton hacia arriba -->
+    <div id="clonedInput1" class="clonedInput">
+        <div>
+            <label class="control-label alert-success" id="">  Crear nueva tarea, por favor llene los campos -- </label>
+            <input type="text" id="codBoletaCreateDetail" name="name" value="@Model.codBoleta" readonly="readonly" hidden/>
+        </div>
+        <div style="border-radius:10px;background-color:#E7F3F1;width:inherit;">
+            <table class="table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            <label class="control-label" >Tipo de Tarea</label>
+                        </th>
+                        <th>
+                            <label class="control-label" >Hallazgo</label>
+                        </th>
+                        <th>
+                            <label class="control-label" >Acciones</label>
+                        </th>
+                        <th>
+                            <label class="control-label" >Recomendaciones</label>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="width:125px">
+                            <select id="tipoTarea" name="tipoTarea" class="form-control dropdown-search dropdown-tiposincidencias" style="height:100px"></select>
+                        </td>
+                        <td>
+                            <textarea class="form-control" id="hallazgo" name="hallazgo" rows="5" cols="35"></textarea>
+                        </td>
+                        <td>
+                            <textarea class="form-control" id="accion" name="accion" rows="5" cols="35"></textarea>
+                        </td>
+                        <td>
+                            <textarea class="form-control" id="solucionRecomendacion" name="solucionRecomendacion" rows="5" cols="35"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <input type="file" id="fileUpload" name="fileUpload" accept="image/x-png,image/jpeg,image/jpg" multiple />
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="">            
+            <a class="btn btn-primary btn-icon-split" onclick="GuardarDetalle()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-save"></i>
+                </span>
+                <span class="text">Guardar Tarea</span>
+            </a>
+            <a class="btn btn-default btn-icon-split" onclick="OcultarFormNuevaTarea()">
+                <span class="icon text-white-50">
+                    <i class="fas fa-trash"></i>
+                </span>
+                <span class="text">Borrar Tarea</span>
+            </a>
+        </div>
+    </div>
+</form>
+    <script>
+        $(document).ready(function () { //Hacia arriba
+            cargarTiposIncidencias(0, 0);
+        });
+
+        function GuardarDetalle() {
+            //alert("Si ingresó aguardar detalle ");
+            var data = $("#formCreateDetail").serialize();
+            console.log(data);
+            var add = "&CodBoleta=" + $("#codBoletaCreateDetail").val();
+            var idTa;
+            data = data + add;
+            //console.log(data);
+            $.ajax({
+                type: "POST",
+                url: '/BoletaVisita/_CreateDetail/',
+                data: data,
+                async: false,
+                success: function (id) {
+                    //alert('el id es:' + id);    
+                    idTa = id;
+                    //location.reload();              
+                    
+                }
+            });
+            //if (idTa != null) {
+                CargarImagen(idTa);
+            //}   
+            window.location.replace('@(Url.Action("Create", "BoletaVisita", null, Request.Url.Scheme))?codBoleta=' + $("#codBoletaCreateDetail").val());
+            //$("#_GetListDetail").load('@(Url.Action("_CreateDetail", "BoletaVisita", null, Request.Url.Scheme))?codBoleta=' + $("#codBoletaCreateDetail").val());                                  
+        }
+
+
+    function CargarImagen(idTarea) {          
+
+        var files = $("#fileUpload").get(0).files;
+        var fileData = new FormData();
+            
+        for (var i = 0; i < files.length; i++) {
+            fileData.append("fileInput", files[i]);
+        }            
+
+            $.ajax({
+                type: 'POST',
+                url: "/BoletaVisita/UploadFiles/?idTarea=" + idTarea,
+                //data: '{ "image" : "' + dataString + '", "id" : "' + idTarea + '" }',
+                data: fileData,   
+                dataType : "json",
+                contentType: false,
+                processData: false,
+                enctype: false,
+                cache: false,
+                success: function (data) {
+                    //alert('si');
+                },
+                error: function (data) {
+                    alert('error');
+                }
+            });
+        }
+
+        function OcultarFormNuevaTarea() {
+            $("#partialView-AddDetail").hide();
+        }
+        
+    </script>
+

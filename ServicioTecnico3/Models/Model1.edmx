@@ -1,0 +1,575 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="herracentroV2Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boleta_Visita_Tecnica_Det_Img">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="correlativo" Type="int" />
+          <Property Name="idDet" Type="int" />
+          <Property Name="servidor" Type="nvarchar" MaxLength="500" />
+          <Property Name="nombreArchivo" Type="nvarchar" MaxLength="500" />
+          <Property Name="extensionArchivo" Type="nvarchar" MaxLength="10" />
+          <Property Name="comentario" Type="nvarchar" MaxLength="500" />
+          <Property Name="firma" Type="int" />
+          <Property Name="fecCrea" Type="datetime" />
+          <Property Name="usuCrea" Type="int" />
+          <Property Name="fecMod" Type="datetime" />
+          <Property Name="usuMod" Type="int" />
+        </EntityType>
+        <EntityType Name="Estado_Boleta_Visita_Tecnica">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Motivo_Visita_Tecnica">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tipos_incidencias">
+          <Key>
+            <PropertyRef Name="id_tipo_incidencia" />
+          </Key>
+          <Property Name="id_tipo_incidencia" Type="int" Nullable="false" />
+          <Property Name="nombre_tipo_incidencia" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" Nullable="false" />
+          <Property Name="id_tipo_usuario" Type="int" Nullable="false" />
+          <Property Name="id_privilegio" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dpi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_direccion" Type="int" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="acceso" Type="bit" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="fotografia" Type="image" />
+          <Property Name="firma" Type="image" />
+        </EntityType>
+        <Function Name="editar_levantado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="varchar" Mode="In" />
+          <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="referencia" Type="varchar" Mode="In" />
+          <Parameter Name="idTienda" Type="int" Mode="In" />
+          <Parameter Name="idUsuario" Type="int" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="insertar_Boleta_Visita_Tecnica_Det" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codBoleta" Type="nvarchar" Mode="In" />
+          <Parameter Name="tipoTarea" Type="int" Mode="In" />
+          <Parameter Name="hallazgo" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="accion" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="solucionRecomendacion" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="usuCrea" Type="int" Mode="In" />
+        </Function>
+        <Function Name="insertar_Boleta_Visita_Tecnica_Enc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaVisita" Type="datetime" Mode="In" />
+          <Parameter Name="motivoVisita" Type="int" Mode="In" />
+          <Parameter Name="usuarioVisita" Type="int" Mode="In" />
+          <Parameter Name="nitCliente" Type="nvarchar" Mode="In" />
+          <Parameter Name="nombreCliente" Type="nvarchar" Mode="In" />
+          <Parameter Name="direccionCliente" Type="nvarchar" Mode="In" />
+          <Parameter Name="email" Type="nvarchar" Mode="In" />
+          <Parameter Name="descripcionVisita" Type="nvarchar" Mode="In" />
+          <Parameter Name="estado" Type="int" Mode="In" />
+          <Parameter Name="referencia1" Type="nvarchar" Mode="In" />
+          <Parameter Name="idUsuarioActual" Type="int" Mode="In" />
+        </Function>
+        <Function Name="insertar_levantado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fecha" Type="date" Mode="In" />
+          <Parameter Name="referencia" Type="varchar" Mode="In" />
+          <Parameter Name="idTienda" Type="int" Mode="In" />
+          <Parameter Name="idUsuario" Type="int" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="mostrar_Boleta_Visita_Tecnica_Det" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codBoleta" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="mostrar_Boleta_Visita_Tecnica_Enc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fechaIni" Type="date" Mode="In" />
+          <Parameter Name="fechaFin" Type="date" Mode="In" />
+          <Parameter Name="codBoleta" Type="nvarchar" Mode="In" />
+          <Parameter Name="idUsuarioVisita" Type="int" Mode="In" />
+        </Function>
+        <Function Name="mostrar_lavantadoDet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idLevantado" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="mostrar_levantado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="anio" Type="int" Mode="In" />
+          <Parameter Name="trimestre" Type="int" Mode="In" />
+          <Parameter Name="parametro" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="mostrar_levantado_max_id" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="mostrar_tiendas_clientes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="mostrar_usuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="herracentroV2Model1StoreContainer">
+          <EntitySet Name="Boleta_Visita_Tecnica_Det_Img" EntityType="Self.Boleta_Visita_Tecnica_Det_Img" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado_Boleta_Visita_Tecnica" EntityType="Self.Estado_Boleta_Visita_Tecnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Motivo_Visita_Tecnica" EntityType="Self.Motivo_Visita_Tecnica" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipos_incidencias" EntityType="Self.tipos_incidencias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="herracentroV2Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Boleta_Visita_Tecnica_Det_Img">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="correlativo" Type="Int32" />
+          <Property Name="idDet" Type="Int32" />
+          <Property Name="servidor" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="nombreArchivo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="extensionArchivo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="comentario" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="firma" Type="Int32" />
+          <Property Name="fecCrea" Type="DateTime" Precision="3" />
+          <Property Name="usuCrea" Type="Int32" />
+          <Property Name="fecMod" Type="DateTime" Precision="3" />
+          <Property Name="usuMod" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Estado_Boleta_Visita_Tecnica">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Motivo_Visita_Tecnica">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tipos_incidencias">
+          <Key>
+            <PropertyRef Name="id_tipo_incidencia" />
+          </Key>
+          <Property Name="id_tipo_incidencia" Type="Int32" Nullable="false" />
+          <Property Name="nombre_tipo_incidencia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_tipo_usuario" Type="Int32" Nullable="false" />
+          <Property Name="id_privilegio" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dpi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_direccion" Type="Int32" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="acceso" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fotografia" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="firma" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="herracentroV2Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Boleta_Visita_Tecnica_Det_Img" EntityType="Self.Boleta_Visita_Tecnica_Det_Img" />
+          <EntitySet Name="Estado_Boleta_Visita_Tecnica" EntityType="Self.Estado_Boleta_Visita_Tecnica" />
+          <EntitySet Name="Motivo_Visita_Tecnica" EntityType="Self.Motivo_Visita_Tecnica" />
+          <EntitySet Name="tipos_incidencias" EntityType="Self.tipos_incidencias" />
+          <EntitySet Name="usuarios" EntityType="Self.usuarios" />
+          <FunctionImport Name="editar_levantado">
+            <Parameter Name="id" Mode="In" Type="String" />
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="referencia" Mode="In" Type="String" />
+            <Parameter Name="idTienda" Mode="In" Type="Int32" />
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="insertar_levantado">
+            <Parameter Name="fecha" Mode="In" Type="DateTime" />
+            <Parameter Name="referencia" Mode="In" Type="String" />
+            <Parameter Name="idTienda" Mode="In" Type="Int32" />
+            <Parameter Name="idUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="descripcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="mostrar_lavantadoDet" ReturnType="Collection(herracentroV2Model1.mostrar_lavantadoDet_Result)">
+          <Parameter Name="idLevantado" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="mostrar_levantado" ReturnType="Collection(herracentroV2Model1.mostrar_levantado_Result)">
+            <Parameter Name="anio" Mode="In" Type="Int32" />
+            <Parameter Name="trimestre" Mode="In" Type="Int32" />
+            <Parameter Name="parametro" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="mostrar_levantado_max_id" ReturnType="Collection(String)" />
+          <FunctionImport Name="mostrar_tiendas_clientes" ReturnType="Collection(herracentroV2Model1.mostrar_tiendas_clientes_Result)" />
+          <FunctionImport Name="mostrar_usuarios" ReturnType="Collection(herracentroV2Model1.mostrar_usuarios_Result)" />
+          <FunctionImport Name="insertar_Boleta_Visita_Tecnica_Det" ReturnType="Collection(herracentroV2Model1.insertar_Boleta_Visita_Tecnica_Det_Result)">
+            <Parameter Name="codBoleta" Mode="In" Type="String" />
+            <Parameter Name="tipoTarea" Mode="In" Type="Int32" />
+            <Parameter Name="hallazgo" Mode="In" Type="String" />
+            <Parameter Name="accion" Mode="In" Type="String" />
+            <Parameter Name="solucionRecomendacion" Mode="In" Type="String" />
+            <Parameter Name="usuCrea" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="insertar_Boleta_Visita_Tecnica_Enc" ReturnType="Collection(String)">
+            <Parameter Name="fechaVisita" Mode="In" Type="DateTime" />
+            <Parameter Name="motivoVisita" Mode="In" Type="Int32" />
+            <Parameter Name="usuarioVisita" Mode="In" Type="Int32" />
+            <Parameter Name="nitCliente" Mode="In" Type="String" />
+            <Parameter Name="nombreCliente" Mode="In" Type="String" />
+            <Parameter Name="direccionCliente" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="descripcionVisita" Mode="In" Type="String" />
+            <Parameter Name="estado" Mode="In" Type="Int32" />
+            <Parameter Name="referencia1" Mode="In" Type="String" />
+            <Parameter Name="idUsuarioActual" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="mostrar_Boleta_Visita_Tecnica_Det" ReturnType="Collection(herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Det_Result)">
+            <Parameter Name="codBoleta" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="mostrar_Boleta_Visita_Tecnica_Enc" ReturnType="Collection(herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Enc_Result)">
+            <Parameter Name="fechaIni" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="codBoleta" Mode="In" Type="String" />
+            <Parameter Name="idUsuarioVisita" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="mostrar_lavantadoDet_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="idLevantado" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="descripcionTarea" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="idTipoMant" Nullable="false" />
+          <Property Type="String" Name="TipoMant" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idArea" Nullable="false" />
+          <Property Type="String" Name="Area" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idProceso" Nullable="true" />
+          <Property Type="String" Name="Proceso" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idEstatus" Nullable="false" />
+          <Property Type="String" Name="Estatus" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="comentario" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="materiales" Nullable="false" />
+          <Property Type="Int32" Name="Img" Nullable="true" />
+          <Property Type="Int32" Name="id_usuario" Nullable="false" />
+          <Property Type="String" Name="usuario" Nullable="false" MaxLength="102" />
+        </ComplexType>
+        <ComplexType Name="mostrar_levantado_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="fecha" Nullable="true" />
+          <Property Type="Int32" Name="idTienda" Nullable="true" />
+          <Property Type="String" Name="nombre_tienda" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="nit_cliente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="nombre_comercial" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="referencia" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="idUsuario" Nullable="true" />
+          <Property Type="String" Name="usuario" Nullable="false" MaxLength="102" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="250" />
+          <Property Type="Int32" Name="ItemPendiente" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="mostrar_tiendas_clientes_Result">
+          <Property Type="Int32" Name="id_tienda" Nullable="false" />
+          <Property Type="String" Name="nombre_tienda" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="nit_cliente" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="nombre_cliente" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="id_direccion" Nullable="false" />
+          <Property Type="String" Name="direccion_completa" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="nota_tienda" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="telefono_1" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="telefono_2" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="mostrar_usuarios_Result">
+          <Property Type="Int32" Name="id_usuario" Nullable="false" />
+          <Property Type="Int32" Name="id_tipo_usuario" Nullable="false" />
+          <Property Type="String" Name="nombre_tipo_usuario" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="id_privilegio" Nullable="false" />
+          <Property Type="String" Name="nombre_privilegio" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="apellido" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="dpi" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="id_direccion" Nullable="false" />
+          <Property Type="String" Name="direccion_completa" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="telefono" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="login" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="acceso" Nullable="false" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+          <Property Type="Binary" Name="firma" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="fotografia" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="insertar_Boleta_Visita_Tecnica_Det_Result">
+          <Property Type="Int32" Name="id" Nullable="true" />
+          <Property Type="Int32" Name="correlativo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="mostrar_Boleta_Visita_Tecnica_Det_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="correlativo" Nullable="true" />
+          <Property Type="String" Name="codBoleta" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="tipoTarea" Nullable="true" />
+          <Property Type="String" Name="tipoTareaNombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="hallazgo" Nullable="true" />
+          <Property Type="String" Name="accion" Nullable="true" />
+          <Property Type="String" Name="solucionRecomendacion" Nullable="true" />
+          <Property Type="DateTime" Name="fecCrea" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="usuCrea" Nullable="true" />
+          <Property Type="String" Name="val" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="mostrar_Boleta_Visita_Tecnica_Enc_Result">
+          <Property Type="String" Name="codBoleta" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="fechaEmision" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="fechaVisita" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="motivoVisita" Nullable="true" />
+          <Property Type="String" Name="motivoVisitanombre" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="usuarioVisita" Nullable="true" />
+          <Property Type="String" Name="usuarioVisitaNombre" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="nitCliente" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="nombreCliente" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="direccionCliente" Nullable="true" MaxLength="350" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="75" />
+          <Property Type="String" Name="descripcionVisita" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="cantidaTareas" Nullable="true" />
+          <Property Type="String" Name="estado" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="referencia1" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="referencia2" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="fecCrea" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="usuCrea" Nullable="true" />
+          <Property Type="DateTime" Name="fecMod" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="usuMod" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="herracentroV2Model1StoreContainer" CdmEntityContainer="herracentroV2Entities1">
+          <EntitySetMapping Name="Boleta_Visita_Tecnica_Det_Img">
+            <EntityTypeMapping TypeName="herracentroV2Model1.Boleta_Visita_Tecnica_Det_Img">
+              <MappingFragment StoreEntitySet="Boleta_Visita_Tecnica_Det_Img">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+                <ScalarProperty Name="idDet" ColumnName="idDet" />
+                <ScalarProperty Name="servidor" ColumnName="servidor" />
+                <ScalarProperty Name="nombreArchivo" ColumnName="nombreArchivo" />
+                <ScalarProperty Name="extensionArchivo" ColumnName="extensionArchivo" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="firma" ColumnName="firma" />
+                <ScalarProperty Name="fecCrea" ColumnName="fecCrea" />
+                <ScalarProperty Name="usuCrea" ColumnName="usuCrea" />
+                <ScalarProperty Name="fecMod" ColumnName="fecMod" />
+                <ScalarProperty Name="usuMod" ColumnName="usuMod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado_Boleta_Visita_Tecnica">
+            <EntityTypeMapping TypeName="herracentroV2Model1.Estado_Boleta_Visita_Tecnica">
+              <MappingFragment StoreEntitySet="Estado_Boleta_Visita_Tecnica">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Motivo_Visita_Tecnica">
+            <EntityTypeMapping TypeName="herracentroV2Model1.Motivo_Visita_Tecnica">
+              <MappingFragment StoreEntitySet="Motivo_Visita_Tecnica">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipos_incidencias">
+            <EntityTypeMapping TypeName="herracentroV2Model1.tipos_incidencias">
+              <MappingFragment StoreEntitySet="tipos_incidencias">
+                <ScalarProperty Name="id_tipo_incidencia" ColumnName="id_tipo_incidencia" />
+                <ScalarProperty Name="nombre_tipo_incidencia" ColumnName="nombre_tipo_incidencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuarios">
+            <EntityTypeMapping TypeName="herracentroV2Model1.usuarios">
+              <MappingFragment StoreEntitySet="usuarios">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+                <ScalarProperty Name="id_privilegio" ColumnName="id_privilegio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="dpi" ColumnName="dpi" />
+                <ScalarProperty Name="id_direccion" ColumnName="id_direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="acceso" ColumnName="acceso" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="fotografia" ColumnName="fotografia" />
+                <ScalarProperty Name="firma" ColumnName="firma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="editar_levantado" FunctionName="herracentroV2Model1.Store.editar_levantado" />
+          <FunctionImportMapping FunctionImportName="insertar_levantado" FunctionName="herracentroV2Model1.Store.insertar_levantado" />
+          <FunctionImportMapping FunctionImportName="mostrar_lavantadoDet" FunctionName="herracentroV2Model1.Store.mostrar_lavantadoDet">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_lavantadoDet_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idLevantado" ColumnName="idLevantado" />
+                <ScalarProperty Name="descripcionTarea" ColumnName="descripcionTarea" />
+                <ScalarProperty Name="idTipoMant" ColumnName="idTipoMant" />
+                <ScalarProperty Name="TipoMant" ColumnName="TipoMant" />
+                <ScalarProperty Name="idArea" ColumnName="idArea" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="idProceso" ColumnName="idProceso" />
+                <ScalarProperty Name="Proceso" ColumnName="Proceso" />
+                <ScalarProperty Name="idEstatus" ColumnName="idEstatus" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="materiales" ColumnName="materiales" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrar_levantado" FunctionName="herracentroV2Model1.Store.mostrar_levantado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_levantado_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="idTienda" ColumnName="idTienda" />
+                <ScalarProperty Name="nombre_tienda" ColumnName="nombre_tienda" />
+                <ScalarProperty Name="nit_cliente" ColumnName="nit_cliente" />
+                <ScalarProperty Name="nombre_comercial" ColumnName="nombre_comercial" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="ItemPendiente" ColumnName="ItemPendiente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrar_levantado_max_id" FunctionName="herracentroV2Model1.Store.mostrar_levantado_max_id" />
+          <FunctionImportMapping FunctionImportName="mostrar_tiendas_clientes" FunctionName="herracentroV2Model1.Store.mostrar_tiendas_clientes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_tiendas_clientes_Result">
+                <ScalarProperty Name="id_tienda" ColumnName="id_tienda" />
+                <ScalarProperty Name="nombre_tienda" ColumnName="nombre_tienda" />
+                <ScalarProperty Name="nit_cliente" ColumnName="nit_cliente" />
+                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+                <ScalarProperty Name="id_direccion" ColumnName="id_direccion" />
+                <ScalarProperty Name="direccion_completa" ColumnName="direccion_completa" />
+                <ScalarProperty Name="nota_tienda" ColumnName="nota_tienda" />
+                <ScalarProperty Name="telefono_1" ColumnName="telefono_1" />
+                <ScalarProperty Name="telefono_2" ColumnName="telefono_2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrar_usuarios" FunctionName="herracentroV2Model1.Store.mostrar_usuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_usuarios_Result">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_tipo_usuario" ColumnName="id_tipo_usuario" />
+                <ScalarProperty Name="nombre_tipo_usuario" ColumnName="nombre_tipo_usuario" />
+                <ScalarProperty Name="id_privilegio" ColumnName="id_privilegio" />
+                <ScalarProperty Name="nombre_privilegio" ColumnName="nombre_privilegio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="dpi" ColumnName="dpi" />
+                <ScalarProperty Name="id_direccion" ColumnName="id_direccion" />
+                <ScalarProperty Name="direccion_completa" ColumnName="direccion_completa" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="acceso" ColumnName="acceso" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="firma" ColumnName="firma" />
+                <ScalarProperty Name="fotografia" ColumnName="fotografia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insertar_Boleta_Visita_Tecnica_Det" FunctionName="herracentroV2Model1.Store.insertar_Boleta_Visita_Tecnica_Det">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.insertar_Boleta_Visita_Tecnica_Det_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="insertar_Boleta_Visita_Tecnica_Enc" FunctionName="herracentroV2Model1.Store.insertar_Boleta_Visita_Tecnica_Enc" />
+          <FunctionImportMapping FunctionImportName="mostrar_Boleta_Visita_Tecnica_Det" FunctionName="herracentroV2Model1.Store.mostrar_Boleta_Visita_Tecnica_Det">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Det_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="correlativo" ColumnName="correlativo" />
+                <ScalarProperty Name="codBoleta" ColumnName="codBoleta" />
+                <ScalarProperty Name="tipoTarea" ColumnName="tipoTarea" />
+                <ScalarProperty Name="tipoTareaNombre" ColumnName="tipoTareaNombre" />
+                <ScalarProperty Name="hallazgo" ColumnName="hallazgo" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="solucionRecomendacion" ColumnName="solucionRecomendacion" />
+                <ScalarProperty Name="fecCrea" ColumnName="fecCrea" />
+                <ScalarProperty Name="usuCrea" ColumnName="usuCrea" />
+                <ScalarProperty Name="val" ColumnName="val" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="mostrar_Boleta_Visita_Tecnica_Enc" FunctionName="herracentroV2Model1.Store.mostrar_Boleta_Visita_Tecnica_Enc">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Enc_Result">
+                <ScalarProperty Name="codBoleta" ColumnName="codBoleta" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="fechaVisita" ColumnName="fechaVisita" />
+                <ScalarProperty Name="motivoVisita" ColumnName="motivoVisita" />
+                <ScalarProperty Name="motivoVisitanombre" ColumnName="motivoVisitanombre" />
+                <ScalarProperty Name="usuarioVisita" ColumnName="usuarioVisita" />
+                <ScalarProperty Name="usuarioVisitaNombre" ColumnName="usuarioVisitaNombre" />
+                <ScalarProperty Name="nitCliente" ColumnName="nitCliente" />
+                <ScalarProperty Name="nombreCliente" ColumnName="nombreCliente" />
+                <ScalarProperty Name="direccionCliente" ColumnName="direccionCliente" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="descripcionVisita" ColumnName="descripcionVisita" />
+                <ScalarProperty Name="cantidaTareas" ColumnName="cantidaTareas" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="referencia1" ColumnName="referencia1" />
+                <ScalarProperty Name="referencia2" ColumnName="referencia2" />
+                <ScalarProperty Name="fecCrea" ColumnName="fecCrea" />
+                <ScalarProperty Name="usuCrea" ColumnName="usuCrea" />
+                <ScalarProperty Name="fecMod" ColumnName="fecMod" />
+                <ScalarProperty Name="usuMod" ColumnName="usuMod" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

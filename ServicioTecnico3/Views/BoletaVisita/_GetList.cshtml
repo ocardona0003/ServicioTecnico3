@@ -1,0 +1,105 @@
+﻿<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+@model IEnumerable<ServicioTecnico3.Models.mostrar_Boleta_Visita_Tecnica_Enc_Result>
+
+
+<table id="table_id" class="display table-responsive">
+    <thead>
+        <tr>
+            <th>
+                <label class="control-label">Codigo Boleta</label>
+            </th>       
+            <th>
+                <label class="control-label">Fecha Visita</label>
+            </th>
+            <th>
+                <label class="control-label">Motivo</label>
+            </th>   
+            <th>
+                <label class="control-label">Usr. Visíta</label>
+            </th>
+            <th>
+                <label class="control-label">Nombre Cliente</label>
+            </th>
+            <th>
+                <label class="control-label">Resumen Visita</label>
+            </th>
+            <th>
+                <label class="control-label">No. Tareas</label>
+            </th>
+            <th>
+                <label class="control-label">Estado</label>
+            </th>
+
+            <th>#Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.codBoleta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaVisita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.motivoVisitanombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usuarioVisitaNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcionVisita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidaTareas)
+            </td>
+            <td>
+                @if (item.estado == "Asignada")
+                {
+                    <buton type="button" class="btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Boleta Asignada">Asignada</buton>
+                }
+                else if (item.estado == "Finalizada")
+                {
+                    <buton type="button" class="btn-warning btn-sm" data-toggle="tooltip" data-placement="top" title="Boleta Finalizada">Finalizada</buton>
+                }
+                else if (item.estado == "Pagada")
+                {
+                    <buton type="button" class="btn-success" data-toggle="tooltip" data-placement="top" title="Boleta ha sido pagada">Pagada</buton>
+                }
+                else
+                {
+                    <buton type="button" class="btn-default btn-sm" data-toggle="tooltip" data-placement="top">Anulado</buton>
+                }
+            </td>
+
+            <td>
+                <a href="#" class="btn btn-info btn-sm" data-toggle="tooltip" data-placement="top" title="Ver detalle de Boleta de Visita Técnica" onclick="location.href='@Url.Action("Create", "BoletaVisita", new { codBoleta = item.codBoleta })'">
+                  Ver
+                </a>
+            </td>
+            
+            @*@Html.ActionLink("Edit", "Edit", new { id = item.codBoleta }) |
+        @Html.ActionLink("Details", "Details", new { id = item.codBoleta }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.codBoleta })*@
+
+        </tr>
+            }
+        }
+        </tbody>
+
+    </table>
+
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>

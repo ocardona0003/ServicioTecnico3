@@ -1,0 +1,48 @@
+﻿@model ServicioTecnico3.Models.usuarios
+
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+
+<div class="jumbotron">
+    <h1>MaxPower &reg;<small>  By Herracentro, S.A.</small></h1>
+    <p class="lead">Su mejor opci&oacute;n en asistencia e instalaci&oacute;n industrial.</p>
+</div>
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+@using (Html.BeginForm("Usuario", "Login", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()    
+    if (@ViewBag.Mensaje != null)
+    {
+        <div style="border: 1px thick;">
+            <label class="alert-danger" style="padding: 5px;">@ViewBag.Mensaje</label>
+        </div>
+    }
+
+
+    <fieldset>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Usuario</label>
+            @Html.EditorFor(model => model.login, new { htmlAttributes = new { @type = "text", @class = "form-control", @id = "login", @placeholder = "Escriba el codigo de usuario" } })
+            <small id="emailHelp" class="form-text text-muted">Sus datos estan encriptados.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @class = "form-control", @id = "pass", @placeholder = "Contraseña" } })
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
+            <label class="form-check-label" for="exampleCheck1">No cerrar sesion</label>
+        </div>
+        <input type="submit" value="Ingresar" class="btn btn-success" />
+    </fieldset>
+
+}

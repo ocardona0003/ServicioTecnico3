@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ServicioTecnico3.Models.Boleta_Visita_Tecnica_Det_Img>
+
+@foreach (var item in Model)
+{
+    if (item.firma == 0)
+    {
+        <div class="gallery" style="float: left;border: 1px solid #ccc; margin: 5px; background-color:white;">
+            <a target="_blank" href="@item.servidor@item.nombreArchivo@item.extensionArchivo">
+                <img src="@item.servidor@item.nombreArchivo@item.extensionArchivo" alt="@item.nombreArchivo" width="170" height="100">
+            </a>
+
+
+            <div class="desc">
+                <table class="table-bordered">
+                    <tr>
+                        <td width="127">
+                            <p style="font-size:smaller">@item.comentario</p>
+                        </td>
+                        <td>
+                            <a href='@Url.Action("EliminaImagen","BoletaVisita", new { id = item.id })' class="btn-sm btn-danger btn-icon-split" title="Eliminar esta imagen">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                                <span class="text"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    }
+
+
+
+}
+
+
+

@@ -1,0 +1,96 @@
+﻿@*Para controlar fechas*@
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/flick/jquery-ui.css" rel="stylesheet" />
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>
+@*Para controlar dropdownList con buscador*@
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+@{
+    ViewBag.Title = "Listado de Boletas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<br />
+<br />
+
+
+
+<a href='@Url.Action("Create","BoletaVisita")' class="btn btn-primary btn-icon-split">
+    <span class="icon text-white-50">
+        <i class="fas fa-flag"></i>
+    </span>
+    <span class="text">Crear Nueva Boleta</span>
+</a>
+<a href='@Url.Action("Index","Estado_Boleta_Visita_Tecnica")' class="btn btn-default btn-icon-split" title="Administrar los estados de Boleta Técnica">
+    <span class="icon text-white-50">
+        <i class="fas fa-tag"></i>
+    </span>
+    <span class="text">Estados de Boleta</span>
+</a>
+<a href='@Url.Action("Index","Motivo_Visita_Tecnica")' class="btn btn-default btn-icon-split" title="Administrar los Motivos de Boleta Técnica">
+    <span class="icon text-white-50">
+        <i class="fas fa-tag"></i>
+    </span>
+    <span class="text">Motivo de Boleta</span>
+</a>
+<br />
+<br />
+<div class="form-group ">
+    <table class="table-responsive" style="width:auto;">
+        <tr>
+            <td class="col-sm-2">
+                <h4><strong>Filtros:</strong> </h4>
+            </td>
+            <td class="col-xs-1 col-sm-1">
+                <label class="control-label" for="last-name">Fecha del</label>
+            </td>
+            <td class="col-xs-3 col-sm-2">
+                <input id="check_in" type='text' class="form-control fecha" name="check_in" data-date-format="DD-MM-YYYY" value="@DateTime.Today.AddMonths(-6).ToShortDateString()" />
+            </td>
+            <td class="col-xs-1 col-sm-1"> 
+                <label class="control-label" for="last-name">al</label>
+            </td>
+            <td class="col-xs-3 col-sm-2">
+                <input id="check_out" type='text' class="form-control fecha" name="check_out" onchange="" data-date-format="DD-MM-YYYY" value="@DateTime.Now.ToShortDateString()" />
+            </td>
+            <td class="col-xs-1 col-sm-1">
+                <label class="control-label" for="last-name">Usr. Visita</label>
+            </td>
+            <td class="col-xs-2 col-sm-3">
+                <div>
+                    @if (Session["Rol"].ToString() == "1")
+                    {
+                        <select id="usuarioFiltro" class="form-control dropdown-search dropdown-usuarios" name="usuarioFiltro"></select>
+                    }
+                    else
+                    {
+                        <select id="usuarioFiltro" class="form-control dropdown-search dropdown-usuarios" name="usuarioFiltro" disabled="disabled"></select>
+                    }
+
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="partialView_GetList">
+        @{
+            @Html.Action("_GetList", "BoletaVisita", new { fechaIni = DateTime.Today.AddMonths(-6), fechaFin = DateTime.Now.Date, usuario = Convert.ToInt32(Session["UserID"]) });
+        }
+    </div>
+
+</div>
+
+
+
+
+<script>
+    //variable de usuario que utilizo en el archivo
+    var UserID = '@Session["UserID"]';
+</script>
+<script src="~/Content/BoletaVisitaTecnica.js"></script>
+
+
+

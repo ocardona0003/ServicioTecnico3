@@ -1,0 +1,149 @@
+﻿
+
+@{
+    ViewBag.Title = "Lista Levantado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a href='@Url.Action("Create","Levantados")' class="btn btn-primary btn-icon-split">
+    <span class="text">Crear Nuevo Levantado</span>
+</a>
+
+<div class="form-group form-inline">
+    <table>
+        <tr>
+            <td><h4>Listado de Levantados Filtrados por : </h4></td>
+            <td>
+                <label class="control-label col-sm-12 " for="last-name">Año</label>
+            </td>
+            <td>
+                <select id="cbAnio" class="select2_single form-control col-md-4 col-sm-12" tabindex="2"></select>
+            </td>
+            <td>
+                <label class="control-label col-lg-12" for="last-name">Trimestre</label>
+            </td>
+            <td>
+                <select id="cbTrimestre" class="select2_single form-control col-md-4 col-sm-12" tabindex="2"></select>
+            </td>
+        </tr>
+    </table>
+
+        <div id="partialView">
+            @{
+                @Html.Action("_GetList", "Levantados", new { anio = DateTime.Now.Year, trim = 3 });
+            }
+        </div>
+
+    </div>
+
+
+
+
+    <script>
+    //cuando el documento esta listo
+    var manual = false;
+    $(document).ready(function () {
+        //lleno los select
+        ComboAno();
+        ComboTrimestre();
+        //valido changes en los select
+        $('#cbAnio').on('change', function () {
+            ActualizaPartialView();
+        });
+        $('#cbTrimestre').on('change', function () {
+            manual = true;
+            ActualizaPartialView();
+        });
+
+       //var anio = $('#cbAnio').val();
+       //var trimestre = $('#cbTrimestre').val();
+       //var fullURL = "/Levantados/_GetList/?anio=" + anio + "&trim=" + trimestre;
+       //$("#partialView").load('@Url.Content("/Levantados/_GetList/")');
+
+    });
+
+    function ComboAno() {
+        var select = $("#cbAnio");
+        select.empty();
+        var n = new Date().getFullYear();
+        var n2 = n;
+        var Data = "<option value=\"" + 0 + "\" selected>Todos</option> ";
+        select.append(Data);
+        for (var i = n; i >= 2018; i--) {
+            if (i == n2) {
+                var Data = "<option value=\"" + i + "\" selected>" + i + "</option> ";
+                select.append(Data);
+            } else {
+                var Data = "<option value=\"" + i + "\" >" + i + "</option> ";
+                select.append(Data);
+            }
+        }
+    }
+
+    function ComboTrimestre() {
+        var SetData = $("#cbTrimestre");
+        SetData.empty();
+        var today = new Date();
+        var quarter = Math.floor((today.getMonth() + 3) / 3);
+
+        for (var i = 0; i <= 4; i++) {
+            if (i == quarter) {
+                var Data = "<option value=\"" + i + "\" selected>" + "Trimestre " + i + "</option> ";
+                SetData.append(Data);
+            } else if (i == 0) {
+                var Data = "<option value=\"" + i + "\" >" + "Todos </option> ";
+                SetData.append(Data);
+            } else {
+                var Data = "<option value=\"" + i + "\" >" + "Trimestre " + i + "</option> ";
+                SetData.append(Data);
+            }
+        }
+        ActualizaPartialView();
+    }
+
+    function ActualizaPartialView() {
+        var anio = $('#cbAnio').val();
+        var trimestre = $('#cbTrimestre').val();
+
+            $("#partialView").load('@Url.Content("/Levantados/_GetList/")', { anio: anio, trim: trimestre });
+    }
+    </script>
+
+
+
+    @*<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+            <script>
+                $(document).ready(function () {
+
+                    $("#levantadoTable").DataTable(
+                        {
+                            "ajax": {
+                                "url": "/Levantados/GetList/?anio=2015&trim=3",
+                                "type": "GET",
+                                "datatype": "json"
+                            },
+                            "columns": [
+                                { "data": "id" },
+                                { "data": "fecha" },
+                                { "data": "nombre_tienda" },
+                                { "data": "nombre_comercial" },
+                                { "data": "usuario" },
+                                { "data": "ItemPendiente" }
+                            ]
+
+                        });
+
+                });
+
+            </script>*@
+
+
+
+
+    @*<script>
+            $(document).ready(function () {
+                $('#table_id').DataTable();
+            });
+        </script>*@
