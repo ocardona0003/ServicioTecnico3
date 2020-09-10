@@ -93,8 +93,8 @@
             });
             //if (idTa != null) {
                 CargarImagen(idTa);
-            //}   
-            window.location.replace('@(Url.Action("Create", "BoletaVisita", null, Request.Url.Scheme))?codBoleta=' + $("#codBoletaCreateDetail").val());
+            //}             
+            
             //$("#_GetListDetail").load('@(Url.Action("_CreateDetail", "BoletaVisita", null, Request.Url.Scheme))?codBoleta=' + $("#codBoletaCreateDetail").val());                                  
         }
 
@@ -118,13 +118,15 @@
                 processData: false,
                 enctype: false,
                 cache: false,
+                async: false,
                 success: function (data) {
                     //alert('si');
                 },
                 error: function (data) {
                     alert('error');
                 }
-            });
+        });
+       window.location.replace('@(Url.Action("Create", "BoletaVisita", null, Request.Url.Scheme))?codBoleta=' + $("#codBoletaCreateDetail").val());
         }
 
         function OcultarFormNuevaTarea() {

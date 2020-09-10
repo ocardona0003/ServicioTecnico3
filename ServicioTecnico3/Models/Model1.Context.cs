@@ -235,5 +235,14 @@ namespace ServicioTecnico3.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<mostrar_Boleta_Visita_Tecnica_Enc_Result>("mostrar_Boleta_Visita_Tecnica_Enc", fechaIniParameter, fechaFinParameter, codBoletaParameter, idUsuarioVisitaParameter);
         }
+    
+        public virtual int eliminar_Boleta_Visita_Tecnica_Det(Nullable<int> idTarea)
+        {
+            var idTareaParameter = idTarea.HasValue ?
+                new ObjectParameter("idTarea", idTarea) :
+                new ObjectParameter("idTarea", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("eliminar_Boleta_Visita_Tecnica_Det", idTareaParameter);
+        }
     }
 }

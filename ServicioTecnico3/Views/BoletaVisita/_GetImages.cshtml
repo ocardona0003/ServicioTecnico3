@@ -4,36 +4,64 @@
 {
     if (item.firma == 0)
     {
-        <div class="gallery" style="float: left;border: 1px solid #ccc; margin: 5px; background-color:white;">
-            <a target="_blank" href="@item.servidor@item.nombreArchivo@item.extensionArchivo">
-                <img src="@item.servidor@item.nombreArchivo@item.extensionArchivo" alt="@item.nombreArchivo" width="170" height="100">
-            </a>
+<div class="gallery" style="float: left;border: 1px solid #ccc; margin: 5px; background-color:white;">
+    <a target="_blank" href="~/Images/@item.nombreArchivo@item.extensionArchivo">
+        <img src="~/Images/@item.nombreArchivo@item.extensionArchivo" alt="@item.nombreArchivo" width="170" height="100" />        
+    </a>
+    <div class="desc">
+        <table class="table-bordered">
+            <tr>
+                @*<td width="127">
+                    <p style="font-size:smaller">@item.comentario</p>
+                </td>*@
+                <td>
+                    <a  class="btn-sm btn-danger btn-icon-split" title="Eliminar esta imagen" onclick="EliminaImg(@item.id)">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="text"></span>
+                    </a>
+                    <a  class="btn-sm btn-primary btn-icon-split" title="Descargar esta imagen" onclick="DescargaImg(@item.id)">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-download"></i>
+                        </span>
+                        <span class="text"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+    }
+}
 
 
-            <div class="desc">
-                <table class="table-bordered">
-                    <tr>
-                        <td width="127">
-                            <p style="font-size:smaller">@item.comentario</p>
-                        </td>
-                        <td>
-                            <a href='@Url.Action("EliminaImagen","BoletaVisita", new { id = item.id })' class="btn-sm btn-danger btn-icon-split" title="Eliminar esta imagen">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-trash"></i>
-                                </span>
-                                <span class="text"></span>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+<script>
+    
 
-            </div>
-        </div>
+    function DescargaImg(idImg) {       
+        //alert('Entro a descargar');
+        window.open('/BoletaVisita/DescargaImagen/?idImg=' + idImg);    
     }
 
-
-
-}
+    function EliminaImg(idImg) {               
+        $.ajax({
+            type: "GET",
+            url: '/BoletaVisita/eliminaImagen/?idImg=' + idImg,            
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {                
+                if (response == 'True') {
+                    alert('Imagen eliminada correctamente!');
+                    location.reload(true);                    
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+    }
+</script>
 
 
 

@@ -191,9 +191,8 @@ namespace ServicioTecnico_v2.Controllers
                 return Json("False", JsonRequestBehavior.AllowGet);
             }          
         }
-
-
-
+        
+        //Metodo para captura de imagenes
         [HttpPost]
         public ActionResult UploadFiles(int idTarea)
         {
@@ -237,31 +236,78 @@ namespace ServicioTecnico_v2.Controllers
             }
             return Json(files.Count + " Files Uploaded!");
         }
-        //funcion para cargar imagenes de tareas
-        [HttpPost]
-        public JsonResult LoadFile(HttpPostedFileBase image)
+
+        //Metodo para descargar la imagen actual
+        public ActionResult DescargaImagen(int idImg)
         {
             try
             {
-                //string fileNameWitPath = Server.MapPath("~/Images/" +  Path.GetFileName(image.FileName));
-                //if (System.IO.File.Exists(fileNameWitPath))
-                //{
-                //    System.IO.File.Delete(fileNameWitPath);
-                //}
-                //image.SaveAs(fileNameWitPath);
-       
-                return Json("true", JsonRequestBehavior.AllowGet);
+                var image = db.Boleta_Visita_Tecnica_Det_Img.Where(s => s.id == idImg)
+                                             .Select(s => s).FirstOrDefault();
+                Boleta_Visita_Tecnica_Det_Img obj = new Boleta_Visita_Tecnica_Det_Img();
+                obj = image;
 
+                string imgPath = Server.MapPath("~/Images/") + obj.nombreArchivo + obj.extensionArchivo;
+                return File(imgPath, "image/jpeg", "Img_" + obj.id.ToString() + obj.extensionArchivo);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.DescargaImagen = ex.Message;
+                return View();
+            }
+           
+        }
+
+        //Metodo para eliminar la imagen seleccionada
+        public JsonResult eliminaImagen(int idImg)
+        {
+            try
+            {
+                var image = db.Boleta_Visita_Tecnica_Det_Img.Where(s => s.id == idImg)
+                            .Select(s => s).FirstOrDefault();
+                Boleta_Visita_Tecnica_Det_Img obj = new Boleta_Visita_Tecnica_Det_Img();
+                obj = image;
+
+                string imgPath = Server.MapPath("~/Images/") + obj.nombreArchivo + obj.extensionArchivo;
+                if (System.IO.File.Exists(imgPath))
+                {
+                    System.IO.File.Delete(imgPath);
+                }
+
+                db.Boleta_Visita_Tecnica_Det_Img.Remove(obj);
+                db.SaveChanges();
+
+                return Json("True", JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
-                return Json("false", JsonRequestBehavior.AllowGet);
-            }
+                return Json("False", JsonRequestBehavior.AllowGet);
+            }           
         }
+
+        //Metodo para eliminar la ima
+        public JsonResult eliminaTarea(int idTarea) {
+            try
+            {
+                db.eliminar_Boleta_Visita_Tecnica_Det(idTarea);
+                return Json("True", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("False", JsonRequestBehavior.AllowGet);
+            }         
+        }
+
+       
+
+       
+
+
+
         //funcion para obtener motivos de visita
         public JsonResult getMotivosVisita()
         {
-            return Json(db.Motivo_Visita_Tecnica.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(db.Motivo_Visita_Tecnica.OrderBy(x => x.nombre).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         //funcion para obtener estado de boleta
@@ -274,7 +320,7 @@ namespace ServicioTecnico_v2.Controllers
         public JsonResult getUsuarios()
         {
             usuarios usr;
-            var data = db.usuarios.ToList();
+            var data = db.usuarios.OrderBy(x => x.nombre).ToList();
             List<usuarios> usrList = new List<usuarios>();
             foreach (var item in data)
             {
@@ -300,7 +346,7 @@ namespace ServicioTecnico_v2.Controllers
         //funcion para obtener tipos de incidencias
         public JsonResult getTiposIncidencias()
         {
-            return Json(db.tipos_incidencias.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(db.tipos_incidencias.OrderBy(x => x.nombre_tipo_incidencia).ToList(), JsonRequestBehavior.AllowGet);
         }
 
 

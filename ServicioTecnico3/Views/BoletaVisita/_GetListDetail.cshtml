@@ -55,16 +55,21 @@
                                     @Html.Action("_GetImages", "BoletaVisita", new { idTask = item.id });
                                 }
                             </div>
-
+                            <input type="file" id="fileUpload2" name="fileUpload2" accept="image/x-png,image/jpeg,image/jpg" multiple />
+                            <a class="btn-sm btn-success btn-icon-split" title="Guardar Imagen Cargada" onclick="CargarImagen(@item.id)">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="text"></span>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
 
             </table>
         </div>
-        <div class="actions">
-            <button class="clone btn btn-primary btn-icon-split">Agregar Tarea</button>
-            <button class="remove btn btn-danger btn-icon-split">Quitar Tarea</button>
+        <div class="actions">            
+            <button class="remove btn btn-danger btn-icon-split" onclick="EliminaTarea(@item.id)">Eliminar Tarea No. @item.correlativo</button>
         </div>
     </div>
     <script>
@@ -80,6 +85,54 @@
     $(document).ready(function () { //Hacia arriba
         irArriba();
     });
+    //funcion para eliminar tarea 
+    function EliminaTarea(idTarea) {         
+        $.ajax({
+            type: "GET",
+            url: '/BoletaVisita/eliminaTarea/?idTarea=' + idTarea,
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                if (response == 'True') {
+                    alert('Tarea eliminada correctamente!');
+                    location.reload(true);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(textStatus);
+            }
+        });
+    }
+    //funcion para cargar imagenes
+     function CargarImagen(idTarea) {          
+         alert("ssi ingresa a cargar imagen");
+         var files = $("#fileUpload2").get(0).files;
+        var fileData = new FormData();
+            
+        for (var i = 0; i < files.length; i++) {
+            fileData.append("fileInput2", files[i]);
+        }            
+
+            $.ajax({
+                type: 'POST',
+                url: "/BoletaVisita/UploadFiles/?idTarea=" + idTarea,
+                //data: '{ "image" : "' + dataString + '", "id" : "' + idTarea + '" }',
+                data: fileData,   
+                dataType : "json",
+                contentType: false,
+                processData: false,
+                enctype: false,
+                cache: false,
+                async: false,
+                success: function (data) {
+                    //alert('si');
+                },
+                error: function (data) {
+                    alert('error');
+                }
+        });
+         alert('Imagen subida correctamente!');
+         location.reload(true);          
+        }
 
     //para agregar otra tarea
     var regex = /^(.+?)(\d+)$/i;

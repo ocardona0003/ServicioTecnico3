@@ -70,6 +70,9 @@
           <Parameter Name="idUsuario" Type="int" Mode="In" />
           <Parameter Name="descripcion" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="eliminar_Boleta_Visita_Tecnica_Det" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idTarea" Type="int" Mode="In" />
+        </Function>
         <Function Name="insertar_Boleta_Visita_Tecnica_Det" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codBoleta" Type="nvarchar" Mode="In" />
           <Parameter Name="tipoTarea" Type="int" Mode="In" />
@@ -240,13 +243,16 @@
             <Parameter Name="idUsuarioActual" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="mostrar_Boleta_Visita_Tecnica_Det" ReturnType="Collection(herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Det_Result)">
-            <Parameter Name="codBoleta" Mode="In" Type="String" />
+          <Parameter Name="codBoleta" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="mostrar_Boleta_Visita_Tecnica_Enc" ReturnType="Collection(herracentroV2Model1.mostrar_Boleta_Visita_Tecnica_Enc_Result)">
             <Parameter Name="fechaIni" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="codBoleta" Mode="In" Type="String" />
             <Parameter Name="idUsuarioVisita" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="eliminar_Boleta_Visita_Tecnica_Det">
+            <Parameter Name="idTarea" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="mostrar_lavantadoDet_Result">
@@ -549,6 +555,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="eliminar_Boleta_Visita_Tecnica_Det" FunctionName="herracentroV2Model1.Store.eliminar_Boleta_Visita_Tecnica_Det" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
