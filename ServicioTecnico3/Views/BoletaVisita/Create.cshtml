@@ -42,7 +42,7 @@
             </span>
             <span class="text">Volver al Listado  </span>
         </a>
-        <input type="submit" value="Guardar" class="btn btn-success btn-icon-split" />
+        @*<input type="submit" value="Guardar" class="btn btn-success btn-icon-split" />*@
     </div>
     <br />
     <br />
@@ -418,6 +418,9 @@
         if (!nit) {
             return true;
         }
+
+        txtN = nit.toUpperCase();
+        if (txtN == "CF" || txtN == "C/F") return true;
 
         var nitRegExp = new RegExp('^[0-9]+(-?[0-9kK])?$');
 

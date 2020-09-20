@@ -103,20 +103,19 @@
         });
     }
     //funcion para cargar imagenes
-     function CargarImagen(idTarea) {          
-         alert("ssi ingresa a cargar imagen");
-         var files = $("#fileUpload2").get(0).files;
-        var fileData = new FormData();
+     function CargarImagen(idTarea) {                   
+        var files = $("#fileUpload2").get(0).files;
+        var fileData2 = new FormData();
             
         for (var i = 0; i < files.length; i++) {
-            fileData.append("fileInput2", files[i]);
+            fileData2.append("fileInput2", files[i]);
         }            
 
             $.ajax({
                 type: 'POST',
                 url: "/BoletaVisita/UploadFiles/?idTarea=" + idTarea,
                 //data: '{ "image" : "' + dataString + '", "id" : "' + idTarea + '" }',
-                data: fileData,   
+                data: fileData2,   
                 dataType : "json",
                 contentType: false,
                 processData: false,

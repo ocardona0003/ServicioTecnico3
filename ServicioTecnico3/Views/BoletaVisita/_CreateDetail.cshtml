@@ -71,10 +71,14 @@
             cargarTiposIncidencias(0, 0);
         });
 
-        function GuardarDetalle() {
+        function GuardarDetalle() {            
+            if ($("#hallazgo").val() == "" || $("#accion").val() == "" || $("#solucionRecomendacion").val() == "" ) {
+                alert('No puede enviar un campo vacio, revise campo Hallazgo, Accion, Solucion');
+                return;
+            }
             //alert("Si ingresó aguardar detalle ");
             var data = $("#formCreateDetail").serialize();
-            console.log(data);
+//            console.log(data);
             var add = "&CodBoleta=" + $("#codBoletaCreateDetail").val();
             var idTa;
             data = data + add;
